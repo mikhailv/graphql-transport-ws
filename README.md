@@ -1,13 +1,22 @@
 # graphql-transport-ws
-[![Build Status](https://travis-ci.org/graph-gophers/graphql-transport-ws.svg?branch=master)](https://travis-ci.org/graph-gophers/graphql-transport-ws)
 
-**(Work in progress!)**
+This Go package is a mix of two packages:
 
-A Go package that leverages WebSockets to transport GraphQL subscriptions, queries and mutations implementing the [Apollo@v0.9.4 protocol](https://github.com/apollographql/subscriptions-transport-ws/blob/v0.9.4/PROTOCOL.md)
+  * [github.com/graph-gophers/graphql-transport-ws](https://github.com/graph-gophers/graphql-transport-ws) v0.0.2
+
+    Handler and GraphQLService API
+
+  * [github.com/99designs/gqlgen](https://github.com/99designs/gqlgen) v0.17.28
+
+    Implementation of WebSocket transport for GraphQL that supports two protocol versions:
+        
+    * [Apollo protocol](https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md)
+    * [graphql-ws protocol](https://github.com/enisdenjo/graphql-ws/blob/master/PROTOCOL.md)
 
 ### Use with graph-gophers/graphql-go
 
-To use this library with [github.com/graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) you can wrap the `relay` handler it provides the following way:
+To use this library with [github.com/graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) you can wrap
+the `relay` handler it provides the following way:
 
 ```go
 package main
@@ -57,4 +66,5 @@ For a more in depth example see [this repo](https://github.com/matiasanaya/go-gr
 
 ### Client
 
-Check [apollographql/subscription-transport-ws](https://github.com/apollographql/subscriptions-transport-ws) for details on how to use WebSockets on the client side.
+Check [graphql-ws Get Started guide](https://the-guild.dev/graphql/ws/get-started#use-the-client) for details
+on how to use WebSockets on the client side.

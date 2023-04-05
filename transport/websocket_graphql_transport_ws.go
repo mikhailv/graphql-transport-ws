@@ -54,7 +54,7 @@ func (me graphqltransportwsMessageExchanger) NextMessage() (message, error) {
 	}
 
 	var graphqltransportwsMessage graphqltransportwsMessage
-	if err := jsonDecode(r, &graphqltransportwsMessage); err != nil {
+	if err := jsonDecodeReader(r, &graphqltransportwsMessage); err != nil {
 		return message{}, errInvalidMsg
 	}
 
@@ -92,7 +92,7 @@ func (t *graphqltransportwsMessageType) UnmarshalText(text []byte) (err error) {
 }
 
 func (t graphqltransportwsMessageType) MarshalText() ([]byte, error) {
-	return []byte(string(t)), nil
+	return []byte(t), nil
 }
 
 func (m graphqltransportwsMessage) toMessage() (message, error) {
