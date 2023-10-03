@@ -317,10 +317,13 @@ func (c *wsConnection) subscribe(ctx context.Context, msg *message) {
 		return
 	}
 
+	ctx, cancel := context.WithCancel(ctx)
+
 	payloads, err := c.service.Subscribe(ctx, params.Query, params.OperationName, params.Variables)
 	if err != nil {
 		c.sendError(msg.id, toGQLError(err))
 		c.complete(msg.id)
+		cancel()
 		return
 	}
 
@@ -328,7 +331,6 @@ func (c *wsConnection) subscribe(ctx context.Context, msg *message) {
 		ctx = withInitPayload(ctx, c.initPayload)
 	}
 
-	ctx, cancel := context.WithCancel(ctx)
 	c.mu.Lock()
 	c.active[msg.id] = cancel
 	c.mu.Unlock()
@@ -345,6 +347,8 @@ func (c *wsConnection) subscribe(ctx context.Context, msg *message) {
 			delete(c.active, msg.id)
 			c.mu.Unlock()
 			cancel()
+			for range payloads { // drain input channel
+			}
 		}()
 
 		for {
